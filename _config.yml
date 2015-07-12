@@ -8,52 +8,52 @@
 #      Configurações Principais       #
 # ----------------------------------- #
 
-# O nome do site (exibido no cabeçalho)
-title: PK - Pedro Reis
-name: PK - Pedro Reis
+  # O nome do site (exibido no cabeçalho)
+  title: PK - Pedro Reis
+  name: PK - Pedro Reis
 
-# Url do site (usado para Sitemap.xml e feed RSS)
-url: http://pedroreis.com.br
-# Uma pequena biografia ou descrição do site (exibido no cabeçalho)
-description: > # Esta será a página pessoal de PK onde será discutido
-  assuntos do cotidiano e preferencialmente a conteúdos relacionado 
-  a TI & Telecom.
-
+  # Url do site (usado para Sitemap.xml e feed RSS)
+  url: http://pedroreis.com.br
+  # Uma pequena biografia ou descrição do site (exibido no cabeçalho)
+  description: > # Esta será a página pessoal de PK onde será discutido
+    assuntos do cotidiano e preferencialmente a conteúdos relacionado 
+    a TI & Telecom.
 
 # ----------------------------------- #
 #      Informações Pessoais           #
 # ----------------------------------- #  
-email: pedroreis.ti@gmail.com
-author: Pedro Reis
 
-# Uma URL que aponta para avatar
-avatar: http://www.gravatar.com/avatar/9a20cef56f9e1bfcd96c6e83c166ac14?s=200
+  email: pedroreis.ti@gmail.com
+  author: Pedro Reis
 
-# Url dos perfis para redes sociais
-social:
-  - title: twitter
-    url: https://twitter.com/PedroUFT
-  - title: linkedin
-    url: https://www.linkedin.com/pub/pedro-henrique-silva-mendes-dos-reis/b1/972/480
-  - title: facebook
-    url: https://www.facebook.com/pedroreis.uft
-  - title: instagram
-    url: https://instagram.com/pedroreis_ti/
-  - title: github
-    url: https://github.com/pedroreisbr
-  # - title: dribbble
-  #   url: https://
-  # - title: email
-  #   url: https://
-  # - title: flickr
-  #   url: https://
-  # - title: pinterest
-  #   url: https://
-  # - title: rss
-  #   url: https://
+  # Uma URL que aponta para avatar
+  avatar: http://www.gravatar.com/avatar/9a20cef56f9e1bfcd96c6e83c166ac14?s=200
+
+  # Url dos perfis para redes sociais
+  social:
+    - title: twitter
+      url: https://twitter.com/PedroUFT
+    - title: linkedin
+      url: https://www.linkedin.com/pub/pedro-henrique-silva-mendes-dos-reis/b1/972/480
+    - title: facebook
+      url: https://www.facebook.com/pedroreis.uft
+    - title: instagram
+      url: https://instagram.com/pedroreis_ti/
+    - title: github
+      url: https://github.com/pedroreisbr
+    # - title: dribbble
+    #   url: https://
+    # - title: email
+    #   url: https://
+    # - title: flickr
+    #   url: https://
+    # - title: pinterest
+    #   url: https://
+    # - title: rss
+    #   url: https://
 
 # ----------------------------------- #
-#      Configurações Página           #
+#      Analytics e Comentários        #
 # ----------------------------------- #
 
 # O nome de usuário Disqus, para permitir comentários nos posts
@@ -65,28 +65,121 @@ social:
 # Código para análise de dados com Gauges
 # gauges_id: 000000000000000
 
-# Uma subpath do site, ex. /blog/
-# baseurl: "" 
+# ----------------------------------- #
+#      Configurações Diretórios       #
+# ----------------------------------- #
 
-# Link Repositorio GitHub
-repository: https://github.com/pedroreisbr/pedroreisbr.github.io
-#help_url: https://github.com/pedroreisbr/pedroreis-help
+  # source:      .                # Pasta com os códigos
+  # destination: ./_site          # Pasta com versão estática convertida
+  # plugins:     ./_plugins       # Pasta com os plugins
+  # layouts:     ./_layouts       # Pasta com os layouts
+  # data_source: ./_data          # Pasta com as configurações do Data Sources
+  # collections: null             # Pasta com os collections
 
-# Outras configurações
-markdown: kramdown
-highlighter: pygments
+# ----------------------------------- #
+#      Configurações de Leitura       #
+# ----------------------------------- #
 
-# Configuração link
-#permalink: /news/:year/:month/:day/:title/
-permalink: /:title
+  # encoding:     "utf-8"                         # Encode padrão
+  # markdown_ext: "markdown,mkdown,mkdn,mkd,md"   # Exteções markdown aceitas
 
-# Emoji
-gems:
-  - jemoji
+  # Habilita/Desabilita plugins e ignora links simbólicos TRUE/FALSE
+  # safe:         false 
 
-# Arquivos para serem excluidos da construção _site
-exclude:
+  # Lista de arquivos e diretórios que serão forçados a serem incluídos da conversão
+  # include:      [".htaccess"]    
+
+  # Lista de arquivos e diretórios que serão excluidos da conversão
+  exclude:      #[]
     - Gemfile
     - Gemfile.lock
     - scss
     - README.md
+
+  # Lista de arquivos e diretórios que não serão sobrepostos na conversão
+  # keep_files:   [".git", ".svn"]
+
+# ----------------------------------- #
+#      Filtro de Conteúdo             #
+# ----------------------------------- #
+
+  # show_drafts: null        # Exibir rascunhos
+  # limit_posts: 0           # Limite de posts
+  # future:      true        # Publicação de posts com data futura
+  # unpublished: false
+
+# ----------------------------------- #
+#      Configurações Plugins          #
+# ----------------------------------- #
+
+  # Lista de plugins utilizados
+  # whitelist: []
+
+  # Lista de gemas utilizadas
+  gems:      # []
+    - jemoji
+
+# ----------------------------------- #
+#      Configurações Conversão        #
+# ----------------------------------- #
+
+  markdown:    kramdown # Tipo markdown
+  highlighter: rouge    # Tipo Syntax HighLighter
+  # lsi:         false    # Indice para posts relacionados
+  # excerpt_separator: "\n\n" # Separador de trechos
+
+# ----------------------------------- #
+#      Configurações Server           #
+# ----------------------------------- #
+
+  # detach:  false     # Executar server 2º plano
+  # port:    4000      # Porta
+  # host:    127.0.0.1 # Hostname
+  # baseurl: ""        # Um subcaminho do site, ex. /blog/
+
+# ----------------------------------- #
+#      Configurações Saída            #
+# ----------------------------------- #
+
+  # Configuração link
+  # permalink: /news/:year/:month/:day/:title/
+  # permalink: date
+  permalink: /:title
+
+  # Configuração de paginação
+  # paginate_path: /page:num
+
+  # Timezone (por padrão utiliza do sistema operacional)
+  # timezone: America/Araguaina
+
+  # Silenciar Saida Server
+  # quiet:    false
+
+  # Configurações Padrões
+  # defaults: []
+
+# ----------------------------------- #
+#      Processadores Markdown         #
+# ----------------------------------- #
+
+  # rdiscount:
+  #   extensions: []
+
+  # redcarpet:
+  #   extensions: []
+
+  # kramdown:
+  #   auto_ids:       true
+  #   footnote_nr:    1
+  #   entity_output:  as_char
+  #   toc_levels:     1..6
+  #   smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  #   enable_coderay: false
+
+  #   coderay:
+  #     coderay_wrap:              div
+  #     coderay_line_numbers:      inline
+  #     coderay_line_number_start: 1
+  #     coderay_tab_width:         4
+  #     coderay_bold_every:        10
+  #     coderay_css:               style

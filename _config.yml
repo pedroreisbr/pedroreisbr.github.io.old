@@ -13,7 +13,7 @@
   name: PK - Pedro Reis
 
   # Url do site (usado para Sitemap.xml e feed RSS)
-  url: http://pedroreis.com.br
+  url: http://127.0.0.1:4000 #http://pedroreis.com.br
   # Uma pequena biografia ou descrição do site (exibido no cabeçalho)
   description: > # Esta será a página pessoal de PK onde será discutido
     assuntos do cotidiano e preferencialmente a conteúdos relacionado 

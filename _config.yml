@@ -107,6 +107,7 @@
   # limit_posts: 0           # Limite de posts
   # future:      true        # Publicação de posts com data futura
   # unpublished: false
+  excerpt_separator: <!--more--> # Divisor conteúdo
 
 # ----------------------------------- #
 #      Configurações Plugins          #
@@ -118,6 +119,7 @@
   # Lista de gemas utilizadas
   gems:      # []
     - jemoji
+    - rouge
 
 # ----------------------------------- #
 #      Configurações Conversão        #

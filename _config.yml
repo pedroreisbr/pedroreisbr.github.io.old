@@ -80,6 +80,8 @@
       permalink: /portfolio/:path/
     parceiros:
       output: true
+    howtos:
+      output: true
 
 # ----------------------------------- #
 #      Configurações de Leitura       #

@@ -71,10 +71,15 @@
 
   # source:      .                # Pasta com os códigos
   # destination: ./_site          # Pasta com versão estática convertida
-  # plugins:     ./_plugins       # Pasta com os plugins
-  # layouts:     ./_layouts       # Pasta com os layouts
-  # data_source: ./_data          # Pasta com as configurações do Data Sources
-  # collections: null             # Pasta com os collections
+  plugins:     ./_plugins       # Pasta com os plugins
+  layouts:     ./_layouts       # Pasta com os layouts
+  data_source: ./_data          # Pasta com as configurações do Data Sources
+  collections:                    # Pasta com os collections
+    portfolio:
+      output: true
+      permalink: /portfolio/:path/
+    parceiros:
+      output: true
 
 # ----------------------------------- #
 #      Configurações de Leitura       #

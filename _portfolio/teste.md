@@ -13,9 +13,10 @@ Este é o primeiro item do portfolio.
 
 Conteudo.
 
-{% if site.collections.portfolio.* %}
+{% if page.collection.* %}
 	 • SIM
-	{{ site.collections.portfolio.*}}
 {% else %}
 	 • Não
 {% endif %}
+
+{{ site.collections.portfolio | listToHtml}}

@@ -1,0 +1,16 @@
+- title: "Parceiros"
+  cidade: Palmas - TO
+  area: "Computação"
+  pessoas:
+    - nome: "Charles"
+      ano: "2014-2015"
+      atividades:
+        - sistema: "SISAT"
+          linguagem: "ASP .NET"
+        - sistema: "JasperServer"
+          linguagem: "Java"
+    - nome: "Luiz"
+      ano: "2015"
+      atividades:
+        - sistema: "JasperServer"
+          linguagem: "Java"

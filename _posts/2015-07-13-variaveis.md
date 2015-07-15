@@ -8,82 +8,41 @@ categories: post jekyll
 tag: post jekyll variaveis
 ---
 
-## site.time:
+<style>
+  table {border: 1px solid red;}
+  tr    {border: 1px solid green;}
+  td    {border: 1px solid blue;}
+</style>
 
-{{ site.time }}
+## paginator.*
 
-## site.pages: 
+{{ paginator }}
 
-{% comment %}{{ site.pages }}{% endcomment %}
+## content.*
 
-## site.posts: 
+{{ content }}
 
-{% comment %}{{ site.posts }}{% endcomment %}
 
-## site.related_posts: 
+## page.*
 
-{% comment %}{{ site.related_posts }}{% endcomment %}
+{{ page | listToHtml }}
 
-## site.static_files
+## site.*
 
-{% comment %}{{ site.static_files }}{% endcomment %}
+{{ site | listToHtml }}
 
-## site.html_pages
 
-{% comment %}{{ site.html_page }}{% endcomment %}
 
-## site.collections
 
-{% comment %}{{ site.collections }}{% endcomment %}
 
-## site.data
 
-{% comment %}{{ site.data }}{% endcomment %}
 
-## site.documents
 
-{% comment %}{{ site.documents }}{% endcomment %}
 
-## site.categories.CATEGORY
 
-{% comment %}{{ site.categories.jekyll }}{% endcomment %}
 
-## site.tags.TAG
 
-{% comment %}{{ site.tags.imagem }}{% endcomment %}
 
-## paginator.per_page
 
-{{ paginator.per_page }}
 
-## paginator.posts
 
-{{ paginator.posts }}
-
-## paginator.total_posts
-
-{{ paginator.total_posts }}
-
-## paginator.total_pages
-
-{{ paginator.total_pages }}
-
-## paginator.page
-
-{{ paginator.page }}
-
-## paginator.previous_page
-
-{{ paginator.previous_page }}
-
-## paginator.previous_page_path
-
-{{ paginator.previous_page_path }}
-
-## paginator.next_page
-
-{{ paginator.next_page }}
-
-## paginator.next_page_path
-
-{{ paginator.next_page_path }}

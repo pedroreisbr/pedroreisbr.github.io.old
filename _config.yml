@@ -127,6 +127,7 @@
   gems:      # []
     - jemoji
     - rouge
+    - i18n
 
 # ----------------------------------- #
 #      Configurações Conversão        #
@@ -156,7 +157,8 @@
   permalink: /:title
 
   # Configuração de paginação
-  # paginate_path: /page:num
+  paginate_path: /posts/:num
+  paginate: 5
 
   # Timezone (por padrão utiliza do sistema operacional)
   # timezone: America/Araguaina

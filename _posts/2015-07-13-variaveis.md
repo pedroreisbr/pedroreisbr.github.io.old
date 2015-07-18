@@ -22,6 +22,7 @@ tag: post jekyll variaveis
 
 {{ content }}
 
+<!--more-->
 
 ## page.*
 

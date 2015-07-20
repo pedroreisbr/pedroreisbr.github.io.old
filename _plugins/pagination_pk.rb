@@ -15,15 +15,19 @@ module Jekyll
       #
       # Returns nothing.
       def generate(site)
+        binding.pry      
+        site.config['paginate_path'] = '/testedrive/:num'  
+        # puts site.config['paginate_path']
         puts '\n\n$ Iniciando geração do Site através Pagination PK'
         puts '$ Chama função Pager_pk.pagination_enabled()'
         if Pager_pk.pagination_enabled?(site)
           puts '$ Retornou verdadeiro'
           puts "$ Chama função Pagination_pk.template_page()"
           if template = self.class.template_page(site)
-            puts "\n\n$ template: #{template}"
+            puts "\n\n$%%%%%%%%%%%%%%%%%%%%%% template: \n#{template}"
             puts "\n\n$ --------------------PARTE 2 -------------------------------"
             puts "\n$ Chama a função paginate()"
+            teste = paginate(site, template)
             paginate(site, template)
             puts "\n\n$ --------------------_FIM -------------------------------"
           else
@@ -31,6 +35,7 @@ module Jekyll
             "an index.html page to use as the pagination template. Skipping pagination."
           end
         end
+        site.config['paginate_path'] = '/caixadagua/:num'  
       end
 
       # Paginates the blog's posts. Renders the index.html file into paginated
@@ -67,10 +72,17 @@ module Jekyll
             puts "--------- page.dir: #{page.dir}"
             puts "--------- page.name: #{page.name}"
             newpage = Page.new(site, site.source, page.dir, page.name)
+            # binding.pry if num_page==2
             newpage.pager = pager
+            # binding.pry if num_page==2
             newpage.dir = Pager_pk.paginate_path(site, num_page)
+            # binding.pry if num_page==2
+            # newpage.name = "index"
+            newpage.basename = "index"
+            # newpage.permalink = "/caixadagua/#{num_page}/"
             puts "$$ Adiciona a nova página à site.pages"
             site.pages << newpage
+            # binding.pry if num_page==3
           else
             page.pager = pager
           end

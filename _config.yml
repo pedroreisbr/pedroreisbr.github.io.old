@@ -78,13 +78,17 @@
     posts:
       output: true
       permalink: /posts/:num/
+      paginate: true
     portfolio:
       output: true
       permalink: /portfolio/:path/
+      paginate: true
     parceiros:
       output: true
+      paginate: false
     howtos:
       output: true
+      paginate: false
 
 # ----------------------------------- #
 #      Configurações de Leitura       #
@@ -160,7 +164,7 @@
   permalink: /:title
 
   # Configuração de paginação
-  paginate_path: /caixadagua/:num
+  paginate_path: /posts/:num
   paginate: 3
 
   # Timezone (por padrão utiliza do sistema operacional)

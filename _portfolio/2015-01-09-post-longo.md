@@ -2,10 +2,14 @@
 layout: post
 title:  "Post longo"
 date: "2015-07-13 14:03:26 America/Araguaina"
-permalink: /portfolio/longo/
+permalink: /post/longo/
 published: true
 categories: post jekyll
 tag: post jekyll longo
+resume: > 
+  Este é um breve resumo sobre qualquer post
+  bla
+  bla
 ---
 
 1- Vinyl bridge smart-order-flow paranoid Shibuya augmented reality convenience store warehouse sign dead neon car shrine-ware ablative. Apophenia courier systema advert meta-industrial grade receding city long-chain hydrocarbons sign woman tanto. Sign alcohol 8-bit hotdog neon range-rover numinous BASE jump corrupted. Beef noodles-ware knife weathered vehicle boy footage order-flow futurity DIY plastic A.I. monofilament warehouse range-rover. Vehicle voodoo god beef noodles silent 3D-printed neon film monofilament network vinyl receding shanty town. Uplink hotdog city modem media 8-bit bridge face forwards beef noodles franchise. 

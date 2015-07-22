@@ -2,10 +2,14 @@
 layout: post
 title:  "Variaveis"
 date: "2015-07-13 15:50:09 America/Araguaina"
-permalink: /portfolio/variaveis/
+permalink: /post/variaveis/
 published: true
 categories: post jekyll
 tag: post jekyll variaveis
+resume: > 
+  Este é um breve resumo sobre qualquer post
+  bla
+  bla
 ---
 
 <style>

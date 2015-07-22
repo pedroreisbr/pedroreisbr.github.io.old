@@ -56,7 +56,7 @@ module Jekyll
           puts "$$$$\t in_hierarchy(source, page_dir, File.dirname(paginate_path)): #{in_hierarchy(config['source'], page_dir, File.dirname(File.dirname(paginate_path)))}"
         puts "\n$$$ Return: \n$$$ page.basename: #{page.basename} == '0001-01-01-index.md' == #{page.basename == '0001-01-01-index.md'}"
         puts "$$$ #{in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))}"
-        page.basename == '0001-01-01-index.md' &&
+        (page.basename == '0001-01-01-index.md') &&
           in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))
       end
 

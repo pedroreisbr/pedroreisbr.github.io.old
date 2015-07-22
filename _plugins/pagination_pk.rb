@@ -15,31 +15,30 @@ module Jekyll
       #
       # Returns nothing.
       def generate(site)
-
-        # for collection_name in site.collection_names
-        #   collection = "#{collection.to_str}"
-        collection="posts"
-
-          site.config['paginate_path'] = "/#{collection}/:num"  
-          # puts site.config['paginate_path']
-          puts '\n\n$ Iniciando geração do Site através Pagination PK'
-          puts '$ Chama função Pager_pk.pagination_enabled()'
-          if Pager_pk.pagination_enabled?(site)
-            puts '$ Retornou verdadeiro'
-            puts "$ Chama função Pagination_pk.template_page()"
-            if template = self.class.template_page(site, collection)
-              puts "\n\n$%%%%%%%%%%%%%%%%%%%%%% template: \n#{template}"
-              puts "\n\n$ --------------------PARTE 2 -------------------------------"
-              puts "\n$ Chama a função paginate()"
-              paginate(site, template, collection)
-              puts "\n\n$ --------------------_FIM -------------------------------"
-            else
-              Jekyll.logger.warn "Pagination:", "Pagination is enabled, but I couldn't find " +
-              "an index.html page to use as the pagination template. Skipping pagination."
+        for collection in site.collection_names
+        # collection="posts"
+          if site.config["collections"]["#{collection}"]["paginate"] == true
+            site.config['paginate_path'] = "/#{collection}/:num"  
+            # puts site.config['paginate_path']
+            puts '\n\n$ Iniciando geração do Site através Pagination PK'
+            puts '$ Chama função Pager_pk.pagination_enabled()'
+            if Pager_pk.pagination_enabled?(site)
+              puts '$ Retornou verdadeiro'
+              puts "$ Chama função Pagination_pk.template_page()"
+              if template = self.class.template_page(site, collection)
+                puts "\n\n$%%%%%%%%%%%%%%%%%%%%%% template: \n#{template}"
+                puts "\n\n$ --------------------PARTE 2 -------------------------------"
+                puts "\n$ Chama a função paginate()"
+                paginate(site, template, collection)
+                puts "\n\n$ --------------------_FIM -------------------------------"
+              else
+                Jekyll.logger.warn "Pagination:", "Pagination is enabled, but I couldn't find " +
+                "an index.html page to use as the pagination template. Skipping pagination."
+              end
             end
+            site.config['paginate_path'] = '/index/:num'  
           end
-          site.config['paginate_path'] = '/index/:num'  
-          # end
+        end
       end
 
       # Paginates the blog's posts. Renders the index.html file into paginated
@@ -89,18 +88,18 @@ module Jekyll
             # puts "$$ Adiciona a nova página à site.pages"
             # site.pages << newpage
             # # binding.pry if num_page==3
-            newpage = Page.new(site, site.source, "_#{collection}/",page.basename)
-            newpage.content = site.collections["posts"].docs.first.content
-            newpage.data = site.collections["posts"].docs.first.data
+            newpage = Page.new(site, site.source, "_#{collection}/","0001-01-01-index.md")
+            newpage.content = site.collections["#{collection}"].docs.first.content
+            newpage.data = site.collections["#{collection}"].docs.first.data
             pager = Pager_pk.pager_hash(site, num_page, all_posts, pages,collection)
             newpage.data = newpage.data.merge(pager)
             newpage.dir = "/#{collection}/#{num_page}/"
             newpage.basename = "index"
             site.pages << newpage
           else
-            newpage = Page.new(site, site.source, "_#{collection}/",page.basename)
-            newpage.content = site.collections["posts"].docs.first.content
-            newpage.data = site.collections["posts"].docs.first.data
+            newpage = Page.new(site, site.source, "_#{collection}/","0001-01-01-index.md")
+            newpage.content = site.collections["#{collection}"].docs.first.content
+            newpage.data = site.collections["#{collection}"].docs.first.data
             pager = Pager_pk.pager_hash(site, num_page, all_posts, pages,collection)
             newpage.data = newpage.data.merge(pager)
             # newpage.pager = pager

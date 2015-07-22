@@ -34,17 +34,19 @@ module Jekyll
       # page   - the Jekyll::Page about which we're inquiring
       #
       # Returns true if the
-      def self.pagination_candidate?(config, page)
-        puts "$$$ page.path: #{page.path}  && config['source']: #{config['source']}"
-        puts "$$$ remove_leading_slash: #{remove_leading_slash(page.path)}"
-        puts "$$$ File.expand_path: #{File.expand_path(remove_leading_slash(page.path), config['source'])}"
+      def self.pagination_candidate?(config, page, collection='posts')
+        puts "$$$ page.basename: #{page.basename}  && config['source']: #{config['source']}"
+        puts "$$$ remove_leading_slash: #{remove_leading_slash(page.basename)}"
+        puts "$$$ File.expand_path: #{File.expand_path(remove_leading_slash(page.basename), "#{config['source']}/_#{collection}")}"
         # puts "$ page_dir (diretorio raiz) = File.dirname: #{File.dirname(File.expand_path(remove_leading_slash(page.path), config['source']))}"
-        page_dir = File.dirname(File.expand_path(remove_leading_slash(page.path), config['source']))
+        page_dir = File.dirname(File.expand_path(remove_leading_slash(page.basename), "#{config['source']}/_#{collection}"))
+        # binding.pry
+        puts "$$$ page_dir: #{page_dir}"
         paginate_path = remove_leading_slash(config['paginate_path'])
         puts "$$$ config['paginate_path']: #{config['paginate_path']}\t&&\tpaginate_path: #{paginate_path}"
         paginate_path = File.expand_path(paginate_path, config['source'])
         puts "$$$ paginate_path: #{paginate_path}"
-        puts "$$$ page.name: #{page.name}"
+        puts "$$$ page.basename: #{page.basename}"
         puts "$$$ Chama in_hierarchy: #{in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))}"
           puts "$$$$ Rerorna falso se paginate_path: #{File.dirname(paginate_path)} == File.dirname(paginate_path): #{File.dirname(File.dirname(paginate_path))}"
           puts "$$$$ Rerorna falso se paginate_path: #{File.dirname(paginate_path)} == Pathname.new(config['source']).parent: #{Pathname.new(config['source']).parent}"
@@ -52,9 +54,9 @@ module Jekyll
           puts "$$$$\t page_dir: #{page_dir} == paginate_path: #{File.dirname(paginate_path)} "
           puts "$$$$\t ou "
           puts "$$$$\t in_hierarchy(source, page_dir, File.dirname(paginate_path)): #{in_hierarchy(config['source'], page_dir, File.dirname(File.dirname(paginate_path)))}"
-        puts "\n$$$ Return: #{page.name == 'index.html' &&
-          in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))}"
-        page.name == '2015-01-01-index.html' &&
+        puts "\n$$$ Return: \n$$$ page.basename: #{page.basename} == '0001-01-01-index.md' == #{page.basename == '0001-01-01-index.md'}"
+        puts "$$$ #{in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))}"
+        page.basename == '0001-01-01-index.md' &&
           in_hierarchy(config['source'], page_dir, File.dirname(paginate_path))
       end
 
@@ -68,8 +70,9 @@ module Jekyll
       def self.in_hierarchy(source, page_dir, paginate_path)
         return false if paginate_path == File.dirname(paginate_path)
         return false if paginate_path == Pathname.new(source).parent
+        # binding.pry
         page_dir == paginate_path ||
-          in_hierarchy(source, page_dir, File.dirname(paginate_path))
+          in_hierarchy(source, File.dirname(page_dir), File.dirname(paginate_path))
       end
 
       # Static: Return the pagination path of the page
@@ -110,6 +113,55 @@ module Jekyll
         ensure_leading_slash(path)[1..-1]
       end
 
+      def self.pager_hash(site, page, all_posts, num_pages = nil, collection)
+        puts "$$$ Criar uma nova página"
+        @page = page
+        puts "$$$ @page = #{page}"
+        @per_page = site.config['paginate'].to_i
+        puts "$$$ @per_page = site.config['paginate'].to_i = #{site.config['paginate'].to_i}"
+        @total_pages = num_pages || Pager_pk.calculate_pages(all_posts, @per_page)
+        puts "$$$ @total_pages = num_pages = #{num_pages} ou calcula = #{@total_pages}"
+
+        if @page > @total_pages
+          raise RuntimeError, "page number can't be greater than total pages: #{@page} > #{@total_pages}"
+        end
+
+        init = ((@page - 1) * @per_page) + 1
+        offset = (init + @per_page - 1) >= all_posts.size ? all_posts.size : (init + @per_page - 1)
+        puts "$$$ init = #{init} e offset = #{offset}"
+
+        @total_posts = all_posts.size
+        puts "$$$ @total_posts = all_posts.size = #{@total_posts}"
+        @posts = all_posts[init..offset]
+        puts "$$$ @posts = all_posts[init..offset] = [#{init}..#{offset}]"
+        @previous_page = @page != 1 ? @page - 1 : nil
+        puts "$$$ @previous_page = #{@previous_page}"
+        if @previous_page==1
+          @previous_page_path = "/#{collection}/"
+        else
+          @previous_page_path = Pager_pk.paginate_path(site, @previous_page)
+        end
+        puts "$$$ @previous_page_path = #{@previous_page_path}"
+        @next_page = @page != @total_pages ? @page + 1 : nil
+        puts "$$$ @next_page = #{@next_page}"
+        @next_page_path = Pager_pk.paginate_path(site, @next_page)
+        puts "$$$ @next_page_path = #{@next_page_path}"
+
+        pager = {
+          "page"                => @page,
+          "per_page"            => @per_page,
+          "total_pages"         => @total_pages,
+          "init"                => init,
+          "offset"              => offset,
+          "total_posts"         => @total_posts,
+          "previous_page"       => @previous_page,
+          "previous_page_path"  => @previous_page_path,
+          "next_page"           => @next_page,
+          "next_page_path"      => @next_page_path
+        }
+        pager = {"pager"=> pager}
+      end
+
       # Initialize a new Pager.
       #
       # site     - the Jekyll::Site object
@@ -124,7 +176,7 @@ module Jekyll
         @per_page = site.config['paginate'].to_i
         puts "$$$ @per_page = site.config['paginate'].to_i = #{site.config['paginate'].to_i}"
         @total_pages = num_pages || Pager_pk.calculate_pages(all_posts, @per_page)
-        puts "$$$ @total_pages = num_pages ou calcula = #{@total_pages}"
+        puts "$$$ @total_pages = num_pages = #{num_pages} ou calcula = #{@total_pages}"
 
         if @page > @total_pages
           raise RuntimeError, "page number can't be greater than total pages: #{@page} > #{@total_pages}"

@@ -161,7 +161,7 @@
 
   # Configuração de paginação
   paginate_path: /caixadagua/:num
-  paginate: 2
+  paginate: 3
 
   # Timezone (por padrão utiliza do sistema operacional)
   # timezone: America/Araguaina

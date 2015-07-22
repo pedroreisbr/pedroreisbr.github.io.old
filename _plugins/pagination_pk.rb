@@ -15,27 +15,31 @@ module Jekyll
       #
       # Returns nothing.
       def generate(site)
-        binding.pry      
-        site.config['paginate_path'] = '/testedrive/:num'  
-        # puts site.config['paginate_path']
-        puts '\n\n$ Iniciando geração do Site através Pagination PK'
-        puts '$ Chama função Pager_pk.pagination_enabled()'
-        if Pager_pk.pagination_enabled?(site)
-          puts '$ Retornou verdadeiro'
-          puts "$ Chama função Pagination_pk.template_page()"
-          if template = self.class.template_page(site)
-            puts "\n\n$%%%%%%%%%%%%%%%%%%%%%% template: \n#{template}"
-            puts "\n\n$ --------------------PARTE 2 -------------------------------"
-            puts "\n$ Chama a função paginate()"
-            teste = paginate(site, template)
-            paginate(site, template)
-            puts "\n\n$ --------------------_FIM -------------------------------"
-          else
-            Jekyll.logger.warn "Pagination:", "Pagination is enabled, but I couldn't find " +
-            "an index.html page to use as the pagination template. Skipping pagination."
+
+        # for collection_name in site.collection_names
+        #   collection = "#{collection.to_str}"
+        collection="posts"
+
+          site.config['paginate_path'] = "/#{collection}/:num"  
+          # puts site.config['paginate_path']
+          puts '\n\n$ Iniciando geração do Site através Pagination PK'
+          puts '$ Chama função Pager_pk.pagination_enabled()'
+          if Pager_pk.pagination_enabled?(site)
+            puts '$ Retornou verdadeiro'
+            puts "$ Chama função Pagination_pk.template_page()"
+            if template = self.class.template_page(site, collection)
+              puts "\n\n$%%%%%%%%%%%%%%%%%%%%%% template: \n#{template}"
+              puts "\n\n$ --------------------PARTE 2 -------------------------------"
+              puts "\n$ Chama a função paginate()"
+              paginate(site, template, collection)
+              puts "\n\n$ --------------------_FIM -------------------------------"
+            else
+              Jekyll.logger.warn "Pagination:", "Pagination is enabled, but I couldn't find " +
+              "an index.html page to use as the pagination template. Skipping pagination."
+            end
           end
-        end
-        site.config['paginate_path'] = '/caixadagua/:num'  
+          site.config['paginate_path'] = '/index/:num'  
+          # end
       end
 
       # Paginates the blog's posts. Renders the index.html file into paginated
@@ -52,9 +56,9 @@ module Jekyll
       #                   "total_pages" => <Number>,
       #                   "previous_page" => <Number>,
       #                   "next_page" => <Number> }}
-      def paginate(site, page)
+      def paginate(site, page, collection)
         puts "$$ Gera a lista de posts"
-        all_posts = site.site_payload['site']['posts'].reject { |post| post['hidden'] }
+        all_posts = site.collections[collection].docs.reject{|item| item.basename=="0001-01-01-index.md"}
         puts "$$ all_posts: #{all_posts}"
         puts "$$ Chama função Pager_pk.calculate_pages"
         pages = Pager_pk.calculate_pages(all_posts, site.config['paginate'].to_i)
@@ -64,27 +68,48 @@ module Jekyll
           puts "$$ %%%%%%%%%%%%%%%%%%%%%%%%%%% Página #{num_page} (num_page) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
           puts "$$ Chama a função Pager_pk.new (paper)"
           pager = Pager_pk.new(site, num_page, all_posts, pages)
+          puts "VOLTOU"
           if num_page > 1
-            puts "$$ Se num_page(#{num_page}) for maior que 1"
-            puts "$$ Chama a função Page.new da biblioteca do jekyll (newpage):"
-            puts "--------- site: #{site}"
-            puts "--------- site.source: #{site.source}"
-            puts "--------- page.dir: #{page.dir}"
-            puts "--------- page.name: #{page.name}"
-            newpage = Page.new(site, site.source, page.dir, page.name)
-            # binding.pry if num_page==2
-            newpage.pager = pager
-            # binding.pry if num_page==2
-            newpage.dir = Pager_pk.paginate_path(site, num_page)
-            # binding.pry if num_page==2
-            # newpage.name = "index"
+            # puts "$$ Se num_page(#{num_page}) for maior que 1"
+            # puts "$$ Chama a função Page.new da biblioteca do jekyll (newpage):"
+            # puts "--------- site: #{site}"
+            # puts "--------- site.source: #{site.source}"
+            # puts "--------- page.dir: _#{collection}/"
+            # puts "--------- page.name: #{page.basename}"
+            # newpage = Page.new(site, site.source, "_#{collection}/", page.basename)
+            # # binding.pry if num_page==2
+            # newpage.pager = pager
+            # # binding.pry if num_page==2
+            # newpage.dir = "/#{collection}/#{num_page}/"
+            # newpage.ext = ".html"
+            # # binding.pry if num_page==2
+            # # newpage.name = "index"
+            # newpage.basename = "index"
+            # # newpage.permalink = "/caixadagua/#{num_page}/"
+            # puts "$$ Adiciona a nova página à site.pages"
+            # site.pages << newpage
+            # # binding.pry if num_page==3
+            newpage = Page.new(site, site.source, "_#{collection}/",page.basename)
+            newpage.content = site.collections["posts"].docs.first.content
+            newpage.data = site.collections["posts"].docs.first.data
+            pager = Pager_pk.pager_hash(site, num_page, all_posts, pages,collection)
+            newpage.data = newpage.data.merge(pager)
+            newpage.dir = "/#{collection}/#{num_page}/"
             newpage.basename = "index"
-            # newpage.permalink = "/caixadagua/#{num_page}/"
-            puts "$$ Adiciona a nova página à site.pages"
             site.pages << newpage
-            # binding.pry if num_page==3
           else
-            page.pager = pager
+            newpage = Page.new(site, site.source, "_#{collection}/",page.basename)
+            newpage.content = site.collections["posts"].docs.first.content
+            newpage.data = site.collections["posts"].docs.first.data
+            pager = Pager_pk.pager_hash(site, num_page, all_posts, pages,collection)
+            newpage.data = newpage.data.merge(pager)
+            # newpage.pager = pager
+            newpage.dir = "/#{collection}/"
+            newpage.basename = "index"
+            # newpage.ext = ".html"
+            site.pages << newpage
+            # binding.pry
+            # # page.pager = pager
           end
         end
       end
@@ -108,16 +133,21 @@ module Jekyll
       # site - the Jekyll::Site object
       #
       # Returns the Jekyll::Page which will act as the pager template
-      def self.template_page(site)
+      def self.template_page(site, collection='posts')
         puts "$$ Seleciona cada uma das páginas"
         # puts "$$ config: #{site.config}"
-        site.pages.select do |page|
+        for page in site.collections["#{collection}"].docs
+        # site.pages.select do |page|
           # puts "$$ page (conteúdo da página): #{page}"
           puts "\n\n$$ Chama função Pager_pk.pagination_candidate"
-          Pager_pk.pagination_candidate?(site.config, page)
-        end.sort do |one, two|
-          two.path.size <=> one.path.size
-        end.first
+          puts "¨¨¨¨¨¨¨¨¨¨¨ Página #{page.path} (#{page.basename})¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨"
+          puts "EXISTE 5555555555555555555555555555555555555555555555555555555 #{Pager_pk.pagination_candidate?(site.config, page, collection)}"
+          if Pager_pk.pagination_candidate?(site.config, page, collection)
+            return page
+          end
+        end#.sort do |one, two|
+        #   two.path.size <=> one.path.size
+        # end.first
       end
 
     end

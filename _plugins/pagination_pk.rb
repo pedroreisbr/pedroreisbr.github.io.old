@@ -18,7 +18,10 @@ module Jekyll
         for collection in site.collection_names
         # collection="posts"
           if site.config["collections"]["#{collection}"]["paginate"] == true
+            bkp_path = site.config['paginate_path']
+            bkb_perpage = site.config['paginate']
             site.config['paginate_path'] = "/#{collection}/:num"  
+            site.config['paginate'] = site.config["collections"]["#{collection}"]["perpage"]
             # puts site.config['paginate_path']
             if Pager_pk.pagination_enabled?(site)
               if template = self.class.template_page(site, collection)
@@ -28,7 +31,8 @@ module Jekyll
                 "an index.html page to use as the pagination template. Skipping pagination."
               end
             end
-            site.config['paginate_path'] = '/index/:num'  
+            site.config['paginate_path'] = bkp_path
+            site.config['paginate'] = bkb_perpage
           end
         end
       end

@@ -79,10 +79,12 @@
       output: true
       permalink: /posts/:num/
       paginate: true
+      perpage: 3
     portfolio:
       output: true
       permalink: /portfolio/:path/
       paginate: true
+      perpage: 6
     parceiros:
       output: true
       paginate: false
@@ -164,7 +166,7 @@
   permalink: /:title
 
   # Configuração de paginação
-  paginate_path: /posts/:num
+  paginate_path: /index/:num
   paginate: 3
 
   # Timezone (por padrão utiliza do sistema operacional)

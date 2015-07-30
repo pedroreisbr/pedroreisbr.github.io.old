@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
+
   {% include head.html %}
 
   <body>
-    {% include header.html index="no" %}
-    {{content}}
-    {% include contact.html %}
+
+    {% include header.html %}
+
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </div>
+
     {% include footer.html %}
-    {% include js.html %}
+
   </body>
+
 </html>

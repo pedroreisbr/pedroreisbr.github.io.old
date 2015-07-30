@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+gem 'jemoji'
+gem 'rouge'
+gem 'pry'
+gem 'i18n'

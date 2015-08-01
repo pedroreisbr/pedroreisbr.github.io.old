@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
   {% include head.html %}
 
   <body>
-    {% include header.html index="no" %}
-    {{content}}
+    {% include header.html index="yes" %}
+    {% include about.html %}
+    {% include page_content.html %}
     {% include contact.html %}
     {% include footer.html %}
     {% include js.html %}

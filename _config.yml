@@ -80,17 +80,17 @@
       permalink: /posts/:num/
       paginate: true
       perpage: 3
-    portfolio:
-      output: true
-      permalink: /portfolio/:path/
-      paginate: true
-      perpage: 6
-    parceiros:
-      output: true
-      paginate: false
-    howtos:
-      output: true
-      paginate: false
+    # portfolio:
+    #   output: true
+    #   permalink: /portfolio/:path/
+    #   paginate: true
+    #   perpage: 6
+    # parceiros:
+    #   output: true
+    #   paginate: false
+    # howtos:
+    #   output: true
+    #   paginate: false
 
 # ----------------------------------- #
 #      Configurações de Leitura       #

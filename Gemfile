@@ -8,6 +8,5 @@ gem 'github-pages', versions['github-pages']
 
 gem 'jemoji'
 gem 'kramdown'
-gem 'rouge'
 gem 'pry'
 gem 'i18n'

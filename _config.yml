@@ -136,7 +136,6 @@
   gems:      # []
     - jemoji
     - i18n
-    - rouge
     - kramdown
 
 # ----------------------------------- #
@@ -146,7 +145,7 @@
   markdown:    kramdown # Tipo markdown
   kramdown:
     input: GFM
-    syntax_highlighter: rouge
+    syntax_highlighter: pygments
   # highlighter: pygments    # Tipo Syntax HighLighter
   # lsi:         false    # Indice para posts relacionados
   # excerpt_separator: "\n\n" # Separador de trechos

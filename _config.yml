@@ -71,15 +71,15 @@
 
   # source:      .                # Pasta com os códigos
   # destination: ./_site          # Pasta com versão estática convertida
-  plugins:     ./_plugins       # Pasta com os plugins
+  # plugins:     ./_plugins       # Pasta com os plugins
   layouts:     ./_layouts       # Pasta com os layouts
   data_source: ./_data          # Pasta com as configurações do Data Sources
-  collections:                    # Pasta com os collections
-    posts:
-      output: true
-      permalink: /posts/:num/
-      paginate: true
-      perpage: 3
+  # collections:                    # Pasta com os collections
+  #   posts:
+  #     output: true
+  #     permalink: /posts/:num/
+  #     paginate: true
+  #     perpage: 3
     # portfolio:
     #   output: true
     #   permalink: /portfolio/:path/
